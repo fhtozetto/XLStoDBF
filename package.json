@@ -1,7 +1,7 @@
 {
   "name": "xlstodbf",
   "version": "1.0.0",
-  "description": "Le o arquivo XLS gerado pelo mgv6 da toleto e transforma para DBF nos padoes da SG",
+  "description": "Le o arquivo XLS gerado pelo mgv6 da toleto e transforma para DBF nos padroes da SG",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
