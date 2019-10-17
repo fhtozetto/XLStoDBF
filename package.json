@@ -1,0 +1,16 @@
+{
+  "name": "xlstodbf",
+  "version": "1.0.0",
+  "description": "Le o arquivo XLS gerado pelo mgv6 da toleto e transforma para DBF nos padoes da SG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Fernando Henrique Tozetto",
+  "license": "ISC",
+  "dependencies": {
+    "dbf": "^0.1.4",
+    "node-xlsx": "^0.15.0"
+  }
+}
