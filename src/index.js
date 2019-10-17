@@ -24,7 +24,7 @@ const plan = xlsx.parse(JSON.parse(config).path.input + '/dados.xls')
 
 const lista = plan[0].data.map( function(e, i) {
     if (i !== 0) {
-        return new item(e[1], 1, e[6] + e[7])
+        return new item(e[1], e[6] + e[7], 1)
     }
 }).filter(e => e !== undefined)
 
