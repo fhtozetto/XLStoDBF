@@ -32,14 +32,15 @@ try {
     try {
         leitor.question("Para qual unidade é: ", (unidade) => {
             fs.writeFileSync(JSON.parse(config).path.output + 
-                '/tp' + unidade + '01'+ now.getFullYear() + monName[now.getMonth() ] + 
+                '/tp' + unidade + '99'+ now.getFullYear() + monName[now.getMonth()] + 
                 now.getDate() + '00.dbf', toBuffer(buf.buffer))
 
             const readableStream = fs.createReadStream(JSON.parse(config).path.input + '/dados.xls') 
             
             let writableStream = fs.createWriteStream(JSON.parse(config).backup 
                 +'/'+ unidade 
-                +'/'+ unidade + '_' + now.getFullYear() +'-'+ monName[now.getMonth() ] +'-'+ now.getDate()+'.xls')
+                +'/'+ unidade + '_' + now.getFullYear() +'-'+ monName[now.getMonth()] 
+                +'-'+ now.getDate() +'-'+ now.getHours() +'h'+ now.getMinutes() +'m'+ now.getSeconds() +'s.xls')
   
             readableStream.pipe(writableStream)
             fs.rename(JSON.parse(config).path.input + '/dados.xls' , JSON.parse(config).path.input + '/dados_old.xls', (e) => { })
