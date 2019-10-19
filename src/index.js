@@ -19,27 +19,32 @@ const leitor = readline.createInterface({
 
 const config = fs.readFileSync(__dirname + '/config.json', 'utf-8')
 
+try {
+    const plan = xlsx.parse(JSON.parse(config).path.input + '/dados.xls')
 
-const plan = xlsx.parse(JSON.parse(config).path.input + '/dados.xls')
+    const lista = plan[0].data.map( function(e, i) {
+        if (i !== 0) {
+            return new item(e[1], e[6] + e[7], 1)
+        }
+    }).filter(e => e !== undefined)
 
-const lista = plan[0].data.map( function(e, i) {
-    if (i !== 0) {
-        return new item(e[1], e[6] + e[7], 1)
+    let buf = dbf.structure(lista)
+    try {
+        leitor.question("Para qual unidade é: ", (unidade) => {
+            fs.writeFileSync(JSON.parse(config).path.output + 
+                '/tp' +unidade + '01'+ now.getFullYear() + monName[now.getMonth() ] + 
+                now.getDate() + '00.dbf', toBuffer(buf.buffer))
+            leitor.close()
+        })
+        
+        fs.rename(JSON.parse(config).path.input + '/dados.xls' , JSON.parse(config).path.input + '/dados_old.xls', (e) => { })
+    } catch(e) {
+        console.log(`Caminho "${JSON.parse(config).path.output}" inacessivel`)
     }
-}).filter(e => e !== undefined)
 
-//console.log(lista)
-
-let buf = dbf.structure(lista)
-
-leitor.question("Para qual unidade é: ", (unidade) => {
-    fs.writeFileSync(JSON.parse(config).path.output + 
-        '/tp' +unidade + '01'+ now.getFullYear() + monName[now.getMonth() ] + 
-        now.getDate() + '00.dbf', toBuffer(buf.buffer))
-    leitor.close()
-})
-
-fs.rename(JSON.parse(config).path.input + '/dados.xls' , JSON.parse(config).path.input + '/dados_old.xls', (e) => { })
+} catch(e) {
+    console.log(`Arquivo "Dados.xls" NAO encontrado em "${JSON.parse(config).path.input}"`)
+}
 
 function toBuffer(ab) {
     let buffer = new Buffer.alloc(ab.byteLength)
