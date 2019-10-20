@@ -17,10 +17,10 @@ const leitor = readline.createInterface({
     output: process.stdout
 })
 
-const config = fs.readFileSync(__dirname + '/config.json', 'utf-8')
+const config = fs.readFileSync(__dirname +'/config.json', 'utf-8')
 
 try {
-    const plan = xlsx.parse(JSON.parse(config).path.input + '/dados.xls')
+    const plan = xlsx.parse(JSON.parse(config).path.input +'/dados.xls')
 
     const lista = plan[0].data.map( function(e, i) {
         if (i !== 0) {
@@ -31,23 +31,23 @@ try {
     let buf = dbf.structure(lista)
     try {
         leitor.question("Para qual unidade é: ", (unidade) => {
-            fs.readdir(JSON.parse(config).backup +'/'+ unidade, (err) => {
+            fs.readdir(JSON.parse(config).path.backup +'/'+ unidade, (err) => {
                 if (err) {
                     console.log('pasta dessa Unidade não encontrada: '+ err.path)
                 } else {
-                    fs.writeFileSync(JSON.parse(config).path.output + 
-                        '/tp' + unidade + '99'+ now.getFullYear() + monName[now.getMonth()] + 
-                        now.getDate() + '00.dbf', toBuffer(buf.buffer))
+                    fs.writeFileSync(JSON.parse(config).path.output 
+                        +'/tp'+ unidade +'99'+ now.getFullYear() + monName[now.getMonth()] 
+                        + now.getDate() +'00.dbf', toBuffer(buf.buffer))
 
-                    const readableStream = fs.createReadStream(JSON.parse(config).path.input + '/dados.xls') 
+                    const readableStream = fs.createReadStream(JSON.parse(config).path.input +'/dados.xls') 
                     
-                    let writableStream = fs.createWriteStream(JSON.parse(config).backup 
+                    let writableStream = fs.createWriteStream(JSON.parse(config).path.backup 
                         +'/'+ unidade 
-                        +'/'+ unidade + '_' + now.getFullYear() +'-'+ monName[now.getMonth()] 
+                        +'/'+ unidade +'_'+ now.getFullYear() +'-'+ monName[now.getMonth()] 
                         +'-'+ now.getDate() +'-'+ now.getHours() +'h'+ now.getMinutes() +'m'+ now.getSeconds() +'s.xls')
         
                     readableStream.pipe(writableStream)
-                    fs.rename(JSON.parse(config).path.input + '/dados.xls' , JSON.parse(config).path.input + '/dados_old.xls', (e) => { })
+                    fs.rename(JSON.parse(config).path.input +'/dados.xls' , JSON.parse(config).path.input +'/dados_old.xls', (e) => { })
 
                     leitor.close()
                 }
@@ -66,7 +66,7 @@ try {
 function toBuffer(ab) {
     let buffer = new Buffer.alloc(ab.byteLength)
     let view = new Uint8Array(ab)
-    for (var i = 0; i < buffer.length; ++i) {
+    for (let i = 0; i < buffer.length; ++i) {
         buffer[i] = view[i]
     }
     return buffer
