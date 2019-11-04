@@ -4,7 +4,10 @@ const readline = require('readline')
 const fs = require('fs')
 
 const now = new Date
-const monName = new Array ('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')
+const dateXX = new Array (null, '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', 
+                            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
+                            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31')
+const monXX = new Array ('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')
 
 function item(codbar, qtdemb1, embala1 ) {
     this.codbar = codbar
@@ -36,15 +39,22 @@ try {
                     console.log('pasta dessa Unidade não encontrada: '+ err.path)
                 } else {
                     fs.writeFileSync(JSON.parse(config).path.output 
-                        +'/tp'+ unidade +'99'+ now.getFullYear() + monName[now.getMonth()] 
-                        + now.getDate() +'00.dbf', toBuffer(buf.buffer))
+                        +'/tp'+ unidade +'99'
+                        + now.getFullYear() 
+                        + monXX[now.getMonth()] 
+                        + dateXX[now.getDate()]
+                        +'00.dbf', 
+                        toBuffer(buf.buffer))
 
                     const readableStream = fs.createReadStream(JSON.parse(config).path.input +'/dados.xls') 
                     
                     let writableStream = fs.createWriteStream(JSON.parse(config).path.backup 
                         +'/'+ unidade 
-                        +'/'+ unidade +'_'+ now.getFullYear() +'-'+ monName[now.getMonth()] 
-                        +'-'+ now.getDate() +'-'+ now.getHours() +'h'+ now.getMinutes() +'m'+ now.getSeconds() +'s.xls')
+                        +'/'+ unidade 
+                        +'_'+ now.getFullYear() 
+                        +'-'+ monXX[now.getMonth()] 
+                        +'-'+ dateXX[now.getDate()]
+                        +'-'+ now.getHours() +'h'+ now.getMinutes() +'m'+ now.getSeconds() +'s.xls')
         
                     readableStream.pipe(writableStream)
                     fs.rename(JSON.parse(config).path.input +'/dados.xls' , JSON.parse(config).path.input +'/dados_old.xls', (e) => { })
