@@ -39,7 +39,7 @@ try {
                     console.log('pasta dessa Unidade não encontrada: '+ err.path)
                 } else {
                     fs.writeFileSync(JSON.parse(config).path.output 
-                        +'/tp'+ unidade +'99'
+                        +'/tp'+ unidade +'099'
                         + now.getFullYear() 
                         + monXX[now.getMonth()] 
                         + dateXX[now.getDate()]
